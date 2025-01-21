@@ -27,10 +27,8 @@ mixin _$SuratModel {
   String get tempatTurun => throw _privateConstructorUsedError;
   String get arti => throw _privateConstructorUsedError;
   String get deskripsi => throw _privateConstructorUsedError;
-  @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
-  List<AyatModel?> get ayat => throw _privateConstructorUsedError;
-  @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
-  List<TafsirModel?> get tafsir => throw _privateConstructorUsedError;
+  List<AyatModel> get ayat => throw _privateConstructorUsedError;
+  List<TafsirModel> get tafsir => throw _privateConstructorUsedError;
 
   /// Serializes this SuratModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,10 +54,8 @@ abstract class $SuratModelCopyWith<$Res> {
       String tempatTurun,
       String arti,
       String deskripsi,
-      @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
-      List<AyatModel?> ayat,
-      @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
-      List<TafsirModel?> tafsir});
+      List<AyatModel> ayat,
+      List<TafsirModel> tafsir});
 }
 
 /// @nodoc
@@ -119,11 +115,11 @@ class _$SuratModelCopyWithImpl<$Res, $Val extends SuratModel>
       ayat: null == ayat
           ? _value.ayat
           : ayat // ignore: cast_nullable_to_non_nullable
-              as List<AyatModel?>,
+              as List<AyatModel>,
       tafsir: null == tafsir
           ? _value.tafsir
           : tafsir // ignore: cast_nullable_to_non_nullable
-              as List<TafsirModel?>,
+              as List<TafsirModel>,
     ) as $Val);
   }
 }
@@ -144,10 +140,8 @@ abstract class _$$SuratModelImplCopyWith<$Res>
       String tempatTurun,
       String arti,
       String deskripsi,
-      @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
-      List<AyatModel?> ayat,
-      @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
-      List<TafsirModel?> tafsir});
+      List<AyatModel> ayat,
+      List<TafsirModel> tafsir});
 }
 
 /// @nodoc
@@ -205,17 +199,18 @@ class __$$SuratModelImplCopyWithImpl<$Res>
       ayat: null == ayat
           ? _value.ayat
           : ayat // ignore: cast_nullable_to_non_nullable
-              as List<AyatModel?>,
+              as List<AyatModel>,
       tafsir: null == tafsir
           ? _value.tafsir
           : tafsir // ignore: cast_nullable_to_non_nullable
-              as List<TafsirModel?>,
+              as List<TafsirModel>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$SuratModelImpl with DiagnosticableTreeMixin implements _SuratModel {
   const _$SuratModelImpl(
       {required this.nomor,
@@ -225,9 +220,7 @@ class _$SuratModelImpl with DiagnosticableTreeMixin implements _SuratModel {
       required this.tempatTurun,
       required this.arti,
       required this.deskripsi,
-      @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
       this.ayat = const [],
-      @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
       this.tafsir = const []});
 
   factory _$SuratModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -248,11 +241,11 @@ class _$SuratModelImpl with DiagnosticableTreeMixin implements _SuratModel {
   @override
   final String deskripsi;
   @override
-  @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
-  final List<AyatModel?> ayat;
+  @JsonKey()
+  final List<AyatModel> ayat;
   @override
-  @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
-  final List<TafsirModel?> tafsir;
+  @JsonKey()
+  final List<TafsirModel> tafsir;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -334,10 +327,8 @@ abstract class _SuratModel implements SuratModel {
       required final String tempatTurun,
       required final String arti,
       required final String deskripsi,
-      @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
-      final List<AyatModel?> ayat,
-      @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
-      final List<TafsirModel?> tafsir}) = _$SuratModelImpl;
+      final List<AyatModel> ayat,
+      final List<TafsirModel> tafsir}) = _$SuratModelImpl;
 
   factory _SuratModel.fromJson(Map<String, dynamic> json) =
       _$SuratModelImpl.fromJson;
@@ -357,11 +348,9 @@ abstract class _SuratModel implements SuratModel {
   @override
   String get deskripsi;
   @override
-  @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
-  List<AyatModel?> get ayat;
+  List<AyatModel> get ayat;
   @override
-  @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
-  List<TafsirModel?> get tafsir;
+  List<TafsirModel> get tafsir;
 
   /// Create a copy of SuratModel
   /// with the given fields replaced by the non-null parameter values.

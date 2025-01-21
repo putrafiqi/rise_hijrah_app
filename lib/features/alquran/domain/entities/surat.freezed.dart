@@ -27,8 +27,8 @@ mixin _$Surat {
   String get tempatTurun => throw _privateConstructorUsedError;
   String get arti => throw _privateConstructorUsedError;
   String get deskripsi => throw _privateConstructorUsedError;
-  List<Ayat?> get ayat => throw _privateConstructorUsedError;
-  List<Tafsir?> get tafsir => throw _privateConstructorUsedError;
+  List<Ayat> get ayat => throw _privateConstructorUsedError;
+  List<Tafsir> get tafsir => throw _privateConstructorUsedError;
 
   /// Serializes this Surat to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,8 +52,8 @@ abstract class $SuratCopyWith<$Res> {
       String tempatTurun,
       String arti,
       String deskripsi,
-      List<Ayat?> ayat,
-      List<Tafsir?> tafsir});
+      List<Ayat> ayat,
+      List<Tafsir> tafsir});
 }
 
 /// @nodoc
@@ -113,11 +113,11 @@ class _$SuratCopyWithImpl<$Res, $Val extends Surat>
       ayat: null == ayat
           ? _value.ayat
           : ayat // ignore: cast_nullable_to_non_nullable
-              as List<Ayat?>,
+              as List<Ayat>,
       tafsir: null == tafsir
           ? _value.tafsir
           : tafsir // ignore: cast_nullable_to_non_nullable
-              as List<Tafsir?>,
+              as List<Tafsir>,
     ) as $Val);
   }
 }
@@ -137,8 +137,8 @@ abstract class _$$SuratImplCopyWith<$Res> implements $SuratCopyWith<$Res> {
       String tempatTurun,
       String arti,
       String deskripsi,
-      List<Ayat?> ayat,
-      List<Tafsir?> tafsir});
+      List<Ayat> ayat,
+      List<Tafsir> tafsir});
 }
 
 /// @nodoc
@@ -196,17 +196,18 @@ class __$$SuratImplCopyWithImpl<$Res>
       ayat: null == ayat
           ? _value.ayat
           : ayat // ignore: cast_nullable_to_non_nullable
-              as List<Ayat?>,
+              as List<Ayat>,
       tafsir: null == tafsir
           ? _value.tafsir
           : tafsir // ignore: cast_nullable_to_non_nullable
-              as List<Tafsir?>,
+              as List<Tafsir>,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$SuratImpl with DiagnosticableTreeMixin implements _Surat {
   const _$SuratImpl(
       {required this.nomor,
@@ -238,10 +239,10 @@ class _$SuratImpl with DiagnosticableTreeMixin implements _Surat {
   final String deskripsi;
   @override
   @JsonKey()
-  final List<Ayat?> ayat;
+  final List<Ayat> ayat;
   @override
   @JsonKey()
-  final List<Tafsir?> tafsir;
+  final List<Tafsir> tafsir;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -323,8 +324,8 @@ abstract class _Surat implements Surat {
       required final String tempatTurun,
       required final String arti,
       required final String deskripsi,
-      final List<Ayat?> ayat,
-      final List<Tafsir?> tafsir}) = _$SuratImpl;
+      final List<Ayat> ayat,
+      final List<Tafsir> tafsir}) = _$SuratImpl;
 
   factory _Surat.fromJson(Map<String, dynamic> json) = _$SuratImpl.fromJson;
 
@@ -343,9 +344,9 @@ abstract class _Surat implements Surat {
   @override
   String get deskripsi;
   @override
-  List<Ayat?> get ayat;
+  List<Ayat> get ayat;
   @override
-  List<Tafsir?> get tafsir;
+  List<Tafsir> get tafsir;
 
   /// Create a copy of Surat
   /// with the given fields replaced by the non-null parameter values.

@@ -9,13 +9,18 @@ import 'al_quran_remote_data_source_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<http.Client>()])
 void main() {
-  late MockClient client;
-  late AlQuranRemoteDataSource dataSource;
+  late MockClient mockClient;
+  late AlQuranRemoteDataSource dataSourceWithMock;
+  late http.Client clientHTTP;
+  late AlQuranRemoteDataSource dataSourceActual;
+
   final baseUrl = 'http://equran.id/api/v2';
 
-  setUpAll(() {
-    client = MockClient();
-    dataSource = AlQuranRemoteDataSourceImpl(client);
+  setUp(() {
+    mockClient = MockClient();
+    dataSourceWithMock = AlQuranRemoteDataSourceImpl(mockClient);
+    clientHTTP = http.Client();
+    dataSourceActual = AlQuranRemoteDataSourceImpl(clientHTTP);
   });
 
   group(
@@ -23,14 +28,9 @@ void main() {
     () {
       test('should return SurahModel when the response code is 200', () async {
         // arrange
-        when(client.get(
-          Uri.parse('$baseUrl/surat'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        )).thenAnswer((_) async => http.Response('{"code":200,"status":"OK","data":[]}', 200));
+
         // act
-        final result = await dataSource.getAllSurat();
+        final result = await dataSourceActual.getAllSurat();
         // assert
         expect(result, isA<List<SuratModel>>());
       });
@@ -38,7 +38,7 @@ void main() {
       test('should throw Exception when the response code is not 200',
           () async {
         // arrange
-        when(client.get(
+        when(mockClient.get(
           Uri.parse('$baseUrl/surat'),
           headers: {
             'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ void main() {
         )).thenAnswer((_) async => http.Response(
             '{"code":500,"status":"Internal Server Error"}', 500));
         // act
-        final call = dataSource.getAllSurat();
+        final call = dataSourceWithMock.getAllSurat();
         // assert
         expect(() => call, throwsException);
       });
@@ -56,25 +56,23 @@ void main() {
   group(
     'Get Detail Surat',
     () {
-      test('should return SurahModel when the response code is 200', () async {
+      test(
+          'Harus Mengembalikan Object Surat Model dengan field ayat tidak kosong dan dengan nomer 1',
+          () async {
         // arrange
-        when(client.get(
-          Uri.parse('$baseUrl/surat/1'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        )).thenAnswer((_) async =>
-            http.Response('{"code":200,"status":"OK","data":{}}', 200));
+
         // act
-        final result = await dataSource.getDetailSuratById(1);
+        final result = await dataSourceActual.getDetailSuratById(1);
         // assert
         expect(result, isA<SuratModel>());
+        expect(result.nomor, 1);
+        expect(result.ayat.isNotEmpty, true);
       });
 
       test('should throw Exception when the response code is not 200',
           () async {
         // arrange
-        when(client.get(
+        when(mockClient.get(
           Uri.parse('$baseUrl/surat/1'),
           headers: {
             'Content-Type': 'application/json',
@@ -82,7 +80,7 @@ void main() {
         )).thenAnswer((_) async => http.Response(
             '{"code":500,"status":"Internal Server Error"}', 500));
         // act
-        final call = dataSource.getDetailSuratById(1);
+        final call = dataSourceWithMock.getDetailSuratById(1);
         // assert
         expect(() => call, throwsException);
       });
@@ -92,24 +90,23 @@ void main() {
   group(
     'Get Tafsiran Surat',
     () {
-      test('should return SurahModel when the response code is 200', () async {
+      test(
+          'Harus mengembalikan Object SuratModel dengan field tafsir tidak kosong dan dengan nomer 1',
+          () async {
         // arrange
-        when(client.get(
-          Uri.parse('$baseUrl/tafsir/1'),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        )).thenAnswer((_) async => http.Response('{}', 200));
+
         // act
-        final result = await dataSource.getTafsirSuratById(1);
+        final result = await dataSourceActual.getTafsirSuratById(1);
         // assert
         expect(result, isA<SuratModel>());
+        expect(result.tafsir.isNotEmpty, true);
+        expect(result.nomor, 1);
       });
 
       test('should throw Exception when the response code is not 200',
           () async {
         // arrange
-        when(client.get(
+        when(mockClient.get(
           Uri.parse('$baseUrl/tafsir/1'),
           headers: {
             'Content-Type': 'application/json',
@@ -117,7 +114,7 @@ void main() {
         )).thenAnswer((_) async => http.Response(
             '{"code":500,"status":"Internal Server Error"}', 500));
         // act
-        final call = dataSource.getTafsirSuratById(1);
+        final call = dataSourceWithMock.getTafsirSuratById(1);
         // assert
         expect(() => call, throwsException);
       });

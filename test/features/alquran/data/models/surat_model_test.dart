@@ -267,8 +267,8 @@ void main() {
             final surat =
                 SuratModel.fromJson((responseAllSurat['data'] as List).first);
 
-            expect(surat.tafsir, isEmpty);
-            expect(surat.ayat, isEmpty);
+            expect(surat.tafsir.isEmpty, isTrue);
+            expect(surat.ayat.isEmpty, isTrue);
           });
         },
       );
@@ -288,7 +288,7 @@ void main() {
           test(' should return a valid SuratModel with ayat not Empty', () {
             final surat = SuratModel.fromJson((responseDetailSurat['data']));
 
-            expect(surat.ayat, isNotEmpty);
+            expect(surat.ayat.isNotEmpty, true);
           });
         },
       );
@@ -308,7 +308,7 @@ void main() {
           test(' should return a valid SuratModel with tafsir Not Empty', () {
             final surat = SuratModel.fromJson((responseTafsirSurat['data']));
 
-            expect(surat.tafsir, isNotEmpty);
+            expect(surat.tafsir.isNotEmpty, true);
           });
         },
       );
@@ -317,17 +317,19 @@ void main() {
 
   group('UserModel Serialization', () {
     test(' should return a JSON map when ayat is not empty', () {
-        final surat = SuratModel.fromJson((responseDetailSurat['data']));
+      final surat = SuratModel.fromJson((responseDetailSurat['data']));
 
-        expect(surat.toJson(), isA<Map<String,dynamic>>());
-        expect(surat.ayat, isNotEmpty);
-      });
-    
+      expect(surat.toJson(), isA<Map<String, dynamic>>());
+      expect(surat.toJson()['ayat'], isA<List<Map<String, dynamic>>>());
+      expect(surat.ayat.isNotEmpty, true);
+    });
+
     test(' should return a JSON map when tafsir is not empty', () {
-        final surat = SuratModel.fromJson((responseTafsirSurat['data']));
+      final surat = SuratModel.fromJson((responseTafsirSurat['data']));
 
-        expect(surat.toJson(), isA<Map<String,dynamic>>());
-        expect(surat.tafsir, isNotEmpty);
-      });
+      expect(surat.toJson(), isA<Map<String, dynamic>>());
+      expect(surat.toJson()['tafsir'], isA<List<Map<String, dynamic>>>());
+      expect(surat.tafsir.isNotEmpty, true);
+    });
   });
 }

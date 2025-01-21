@@ -15,13 +15,11 @@ _$SuratImpl _$$SuratImplFromJson(Map<String, dynamic> json) => _$SuratImpl(
       arti: json['arti'] as String,
       deskripsi: json['deskripsi'] as String,
       ayat: (json['ayat'] as List<dynamic>?)
-              ?.map((e) =>
-                  e == null ? null : Ayat.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Ayat.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       tafsir: (json['tafsir'] as List<dynamic>?)
-              ?.map((e) =>
-                  e == null ? null : Tafsir.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Tafsir.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );
@@ -35,6 +33,6 @@ Map<String, dynamic> _$$SuratImplToJson(_$SuratImpl instance) =>
       'tempatTurun': instance.tempatTurun,
       'arti': instance.arti,
       'deskripsi': instance.deskripsi,
-      'ayat': instance.ayat,
-      'tafsir': instance.tafsir,
+      'ayat': instance.ayat.map((e) => e.toJson()).toList(),
+      'tafsir': instance.tafsir.map((e) => e.toJson()).toList(),
     };

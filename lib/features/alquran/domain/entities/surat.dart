@@ -8,6 +8,7 @@ part 'surat.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 class Surat with _$Surat {
+  @JsonSerializable(explicitToJson: true)
   const factory Surat({
     required int nomor,
     required String nama,
@@ -16,8 +17,8 @@ class Surat with _$Surat {
     required String tempatTurun,
     required String arti,
     required String deskripsi,
-    @Default([]) List<Ayat?> ayat,
-    @Default([]) List<Tafsir?> tafsir,
+    @Default([]) List<Ayat> ayat,
+    @Default([]) List<Tafsir> tafsir,
   }) = _Surat;
 
   factory Surat.fromJson(Map<String, dynamic> json) => _$SuratFromJson(json);

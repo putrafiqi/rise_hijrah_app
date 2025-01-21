@@ -6,7 +6,6 @@ part 'ayat_model.g.dart';
 
 @freezed
 class AyatModel with _$AyatModel {
-
   const factory AyatModel({
     required int nomorAyat,
     required String teksArab,

@@ -8,6 +8,7 @@ part 'surat_model.g.dart';
 
 @Freezed(makeCollectionsUnmodifiable: false)
 class SuratModel with _$SuratModel {
+  @JsonSerializable(explicitToJson: true)
   const factory SuratModel({
     required int nomor,
     required String nama,
@@ -16,12 +17,8 @@ class SuratModel with _$SuratModel {
     required String tempatTurun,
     required String arti,
     required String deskripsi,
-    @JsonKey(name: 'ayat', includeFromJson: true, includeToJson: true)
-    @Default([])
-    List<AyatModel?> ayat,
-    @JsonKey(name: 'tafsir', includeFromJson: true, includeToJson: true)
-    @Default([])
-    List<TafsirModel?> tafsir,
+    @Default([]) List<AyatModel> ayat,
+    @Default([]) List<TafsirModel> tafsir,
   }) = _SuratModel;
 
   factory SuratModel.fromJson(Map<String, dynamic> json) =>
