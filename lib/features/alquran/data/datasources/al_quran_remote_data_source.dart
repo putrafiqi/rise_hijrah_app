@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:alquran_app/features/alquran/data/models/surat_model.dart';
+import '../models/surat_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class AlQuranRemoteDataSource {
@@ -14,7 +14,7 @@ class AlQuranRemoteDataSourceImpl implements AlQuranRemoteDataSource {
 
   AlQuranRemoteDataSourceImpl(this.client);
 
-  static const String _baseUrl = 'http://equran.id/api/v2';
+  static const String _baseUrl = 'https://equran.id/api/v2';
 
   @override
   Future<List<SuratModel>> getAllSurat() async {

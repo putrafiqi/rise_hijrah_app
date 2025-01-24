@@ -1,5 +1,5 @@
-import 'package:alquran_app/features/alquran/data/models/ayat_model.dart';
-import 'package:alquran_app/features/alquran/data/models/tafsir_model.dart';
+import 'ayat_model.dart';
+import 'tafsir_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 

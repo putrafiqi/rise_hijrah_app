@@ -1,7 +1,7 @@
-import 'package:alquran_app/features/alquran/domain/entities/ayat.dart';
-import 'package:alquran_app/features/alquran/domain/entities/tafsir.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../alquran.dart' show Ayat, Tafsir;
 
 part 'surat.freezed.dart';
 part 'surat.g.dart';

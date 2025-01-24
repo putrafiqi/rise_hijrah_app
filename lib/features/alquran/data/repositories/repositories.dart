@@ -1,0 +1,1 @@
+export 'al_quran_repository_impl.dart';

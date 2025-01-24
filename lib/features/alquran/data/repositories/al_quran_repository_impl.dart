@@ -1,6 +1,6 @@
-import 'package:alquran_app/features/alquran/data/datasources/al_quran_remote_data_source.dart';
-import 'package:alquran_app/features/alquran/domain/entities/surat.dart';
-import 'package:alquran_app/features/alquran/domain/repositories/al_quran_repository.dart';
+import '../datasources/al_quran_remote_data_source.dart';
+import '../../domain/entities/surat.dart';
+import '../../domain/repositories/al_quran_repository.dart';
 
 class AlQuranRepositoryImpl implements AlQuranRepository {
   final AlQuranRemoteDataSource remoteDataSource;

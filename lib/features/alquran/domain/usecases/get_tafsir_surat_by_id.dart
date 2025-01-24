@@ -1,5 +1,5 @@
-import 'package:alquran_app/features/alquran/domain/entities/surat.dart';
-import 'package:alquran_app/features/alquran/domain/repositories/al_quran_repository.dart';
+import 'package:alquran_app/features/alquran/alquran.dart'
+    show Surat, AlQuranRepository;
 
 class GetTafsirSuratById {
   final AlQuranRepository repository;

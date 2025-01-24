@@ -1,4 +1,4 @@
-import 'package:alquran_app/features/alquran/domain/entities/surat.dart';
+import '../../alquran.dart' show Surat;
 
 abstract class AlQuranRepository {
   Future<List<Surat>> getAllSurat();

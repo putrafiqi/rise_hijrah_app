@@ -1,5 +1,5 @@
 
-import 'package:alquran_app/features/alquran/data/models/ayat_model.dart';
+import 'package:alquran_app/features/alquran/data/models/models.dart' show AyatModel;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
