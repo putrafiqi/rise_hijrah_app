@@ -1,3 +1,5 @@
+import 'package:alquran_app/core/extension/string.dart';
+import 'package:alquran_app/core/theme/color.dart';
 import 'package:flutter/material.dart';
 
 import '../../alquran.dart' show Surat;
@@ -20,15 +22,21 @@ class SuratTile extends StatelessWidget {
       key: ValueKey(surat.nomor),
       title: Text(
         surat.namaLatin,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          color: AppColor.primary,
+        ),
       ),
       subtitle: Text(surat.arti),
       leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        backgroundImage: AssetImage('assets/images/ayat.png'),
         child: Text(
           surat.nomor.toString(),
           style: const TextStyle(
+            color: AppColor.primary,
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 10,
           ),
         ),
       ),
@@ -107,7 +115,7 @@ class SuratTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      surat.deskripsi,
+                      surat.deskripsi.parseHtmlString(),
                       style: TextStyle(
                         fontSize: 14,
                         height: 1.5,

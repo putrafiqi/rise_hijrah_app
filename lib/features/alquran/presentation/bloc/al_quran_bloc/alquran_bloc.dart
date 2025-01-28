@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import '../../../alquran.dart' show GetAllSurat, GetSuratById, GetTafsirSuratById, Surat;
+import '../../../alquran.dart'
+    show GetAllSurat, GetSuratById, GetTafsirSuratById, Surat;
 
 part 'alquran_event.dart';
 part 'alquran_state.dart';
 
-class AlquranBloc extends Bloc<AlquranEvent, AlquranState> {
+class AlquranBloc extends HydratedBloc<AlquranEvent, AlquranState> {
   final GetAllSurat _getAllSurat;
   final GetSuratById _getDetailSurat;
   final GetTafsirSuratById _getTafsirSurat;
@@ -21,15 +22,14 @@ class AlquranBloc extends Bloc<AlquranEvent, AlquranState> {
         super(AlquranInitial([])) {
     on<GetAllSuratRequest>(
       (event, emit) async {
+        emit(AlquranLoading(state.alqurans));
 
         /// Check if the alqurans already fetched
         if (state.alqurans.isNotEmpty) {
           emit(AlquranLoaded(state.alqurans));
           return;
         }
-        emit(AlquranLoading(state.alqurans));
         try {
-
           /// Fetch all surat
           final result = await _getAllSurat.call();
           emit(AlquranLoaded(result));
@@ -40,6 +40,7 @@ class AlquranBloc extends Bloc<AlquranEvent, AlquranState> {
     );
     on<GetDetailSuratRequest>(
       (event, emit) async {
+        emit(AlquranLoading(state.alqurans));
 
         /// Check if the surat already has ayat
         if (state.alqurans
@@ -50,9 +51,7 @@ class AlquranBloc extends Bloc<AlquranEvent, AlquranState> {
           emit(AlquranLoaded(state.alqurans));
           return;
         }
-        emit(AlquranLoading(state.alqurans));
         try {
-
           /// Fetch detail surat
           final result = await _getDetailSurat.call(event.nomor);
 
@@ -68,6 +67,7 @@ class AlquranBloc extends Bloc<AlquranEvent, AlquranState> {
 
     on<GetTafsirSuratRequest>(
       (event, emit) async {
+        emit(AlquranLoading(state.alqurans));
 
         /// Check if the surat already has tafsir
         if (state.alqurans
@@ -78,9 +78,7 @@ class AlquranBloc extends Bloc<AlquranEvent, AlquranState> {
           emit(AlquranLoaded(state.alqurans));
           return;
         }
-        emit(AlquranLoading(state.alqurans));
         try {
-
           /// Fetch tafsir surat
           final result = await _getTafsirSurat.call(event.nomor);
           emit(AlquranLoaded(state.alqurans
@@ -94,4 +92,12 @@ class AlquranBloc extends Bloc<AlquranEvent, AlquranState> {
       },
     );
   }
+
+  @override
+  AlquranState? fromJson(Map<String, dynamic> json) => AlquranLoaded(
+      (json['alqurans'] as List).map((e) => Surat.fromJson(e)).toList());
+
+  @override
+  Map<String, dynamic>? toJson(AlquranState state) =>
+      {'alqurans': state.alqurans.map((e) => e.toJson()).toList()};
 }

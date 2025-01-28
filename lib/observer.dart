@@ -25,13 +25,13 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    log('${bloc.runtimeType} | ${change.toString()}');
+    log('${bloc.runtimeType} | ${change.runtimeType.toString()}');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    log('${bloc.runtimeType} | ${transition.toString()}');
+    log('${bloc.runtimeType} | ${transition.runtimeType.toString()}');
   }
 
   @override

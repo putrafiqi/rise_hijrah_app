@@ -1,8 +1,11 @@
+import 'package:alquran_app/core/skeleton/skeleton_list_ayat.dart';
+import 'package:alquran_app/core/theme/color.dart';
 import 'package:alquran_app/features/alquran/alquran.dart'
     show
         AlquranBloc,
         AlquranLoaded,
         AlquranLoading,
+        AlquranError,
         AlquranState,
         AyatTile,
         GetDetailSuratRequest,
@@ -19,9 +22,7 @@ class BacaAlQuranPage extends StatelessWidget {
       {required AlquranBloc bloc}) {
     return MaterialPageRoute<void>(
         builder: (_) => BlocProvider.value(
-              value: bloc
-                ..add(GetDetailSuratRequest(nomorSurat))
-                ..add(GetTafsirSuratRequest(nomorSurat)),
+              value: bloc,
               child: BacaAlQuranPage._(
                 nomorSurat: nomorSurat,
                 namaSurat: namaSurat,
@@ -61,22 +62,6 @@ class _BacaAlQuranViewState extends State<_BacaAlQuranView>
         animationDuration: const Duration(milliseconds: 300),
         vsync: this);
 
-    /// Listen to tab changes
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        context.read<AlquranBloc>()
-          ..add(GetDetailSuratRequest(_tabController.index + 1))
-          ..add(GetTafsirSuratRequest(_tabController.index + 1));
-        setState(() {
-          _namaSurat = context
-              .read<AlquranBloc>()
-              .state
-              .alqurans[_tabController.index]
-              .namaLatin;
-        });
-      }
-    });
-
     /// Set initial namaSurat
     _namaSurat = widget.namaSurat;
     super.initState();
@@ -97,14 +82,16 @@ class _BacaAlQuranViewState extends State<_BacaAlQuranView>
           child: BlocBuilder<AlquranBloc, AlquranState>(
             builder: (context, state) {
               if (state is AlquranLoading) {
-                return const CircularProgressIndicator();
+                return SkelentonListAyat();
               } else if (state is AlquranLoaded) {
                 return TabBarView(
                   controller: _tabController,
                   children: [
                     for (final surat in state.alqurans)
                       ListView.builder(
-                        itemCount: surat.ayat.length,
+                        itemCount: surat.ayat.length == surat.tafsir.length
+                            ? surat.ayat.length
+                            : 0,
                         itemBuilder: (context, index) {
                           final ayat = surat.ayat[index];
                           final tafsir = surat.tafsir[index];
@@ -117,7 +104,10 @@ class _BacaAlQuranViewState extends State<_BacaAlQuranView>
                       ),
                   ],
                 );
+              } else if (state is AlquranError) {
+                return Text(state.message);
               }
+
               return SizedBox();
             },
           ),
@@ -129,7 +119,7 @@ class _BacaAlQuranViewState extends State<_BacaAlQuranView>
   AppBar _appBar(BuildContext context) {
     return AppBar(
       title: Text('Surat $_namaSurat'),
-      backgroundColor: Colors.blue[700],
+      backgroundColor: AppColor.primary,
       foregroundColor: Colors.white,
       automaticallyImplyLeading: false,
       actions: [
@@ -142,9 +132,25 @@ class _BacaAlQuranViewState extends State<_BacaAlQuranView>
         controller: _tabController,
         labelColor: Colors.white,
         unselectedLabelColor: Colors.white,
-        indicatorColor: Colors.blue[900],
+        indicatorColor: Colors.white,
         tabAlignment: TabAlignment.start,
         isScrollable: true,
+        onTap: (index) {
+          if (context.read<AlquranBloc>().state.alqurans[index].ayat.isEmpty &&
+              context
+                  .read<AlquranBloc>()
+                  .state
+                  .alqurans[index]
+                  .tafsir
+                  .isEmpty) {
+            context.read<AlquranBloc>().add(GetDetailSuratRequest(index + 1));
+            context.read<AlquranBloc>().add(GetTafsirSuratRequest(index + 1));
+          }
+          setState(() {
+            _namaSurat =
+                context.read<AlquranBloc>().state.alqurans[index].namaLatin;
+          });
+        },
         tabs: [
           for (final surat in context.read<AlquranBloc>().state.alqurans)
             Tab(
